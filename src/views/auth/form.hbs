@@ -1,0 +1,78 @@
+<head>
+
+  <title>Form</title>
+
+</head>
+
+<body class="authentication-bg authentication-bg-pattern">
+
+  <div class="content content-page">
+    <div class="container-fluid">
+      {{!-- Titulo pagina --}}
+      <div class="row">
+        <div class="col-12">
+          <div class="page-title-box">
+            <h4 class="page-title" style="color: white;">Generar Pedidos</h4>
+          </div>
+        </div>
+      </div>
+      {{!-- Fin Titulo pagina --}}
+
+      {{!-- Contenido --}}
+
+          <div class="row justify-content-center">
+            <div class="col-10">
+              <div class="card">
+                
+                <div class="card-body">
+                  {{> message }}
+                  <center>
+                    <h1>GENERAR PEDIDO</h1>
+                  </center>
+
+                  <form id="formulario-pedido" action="/crearpedido" method="POST">
+                    
+                    <div class="form-row"> 
+
+                      <div class="d-none" id="sucursal_actual">{{user.PKSUC_NCODIGO}}</div>
+
+                      <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="input-group-prepend">
+                            <label for="mesa_disponible" class="col-form-label text-muted">Mesas</label>
+                        </div>
+                        <select class="custom-select form-control" name="mesa_disponible" id="mesa_disponible" required>
+                            <option value="">Elige una opción</option>
+                        </select>
+                      </div>             
+
+                    </div>
+                    
+                    <div id="productos"></div>
+
+                    <button type="button" onclick="agregarProducto()"
+                      class="btn btn-success btn-rounded waves-effect waves-light">
+                      <span><i class="fas fa-plus"></i></span>
+                    </button>
+                    
+                    <div class="form-group mb-0 text-center">                      
+                      <button type="submit" id="inicio_sesion"
+                        class="btn btn-secondary btn-rounded waves-effect waves-light">
+                        <span class="btn-label"><i class="fas fa-sign-in-alt"></i></span>Enviar Pedido
+                      </button>
+                    </div>
+
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+      
+      {{!-- Fin Contenido Login --}}
+
+    </div>
+  </div>
+</body>
+
+
+<script src="js/reporting/productos_disponibles.js"></script>

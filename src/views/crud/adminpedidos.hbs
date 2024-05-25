@@ -1,0 +1,190 @@
+<head>
+
+    <title>Administrar Pedidos</title>
+
+</head>
+
+<div class="content content-page">
+    <div class="container-fluid">
+        {{!-- Titulo pagina --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Administración de Pedidos</h4>
+                </div>
+            </div>
+        </div>
+        {{!-- Fin Titulo pagina --}}
+
+        {{!-- Formulario --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        {{> message }}
+                        <h4 class="header-title">Registrar Pedido</h4>
+                        
+                        {{!-- Tabla Listar pedidos --}}
+                        <div class="table-responsive">
+                            <table id="Reporte_Admin_Pedido" class="table table-striped dt-responsive nowrap"
+                                style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <center>ID</center>
+                                        </th>
+                                        <th>
+                                            <center>EDITAR</center>
+                                        </th>
+                                        <th>
+                                            <center>MESERO</center>
+                                        </th>
+                                        <th>
+                                            <center>MESA</center>
+                                        </th>
+                                        <th>
+                                            <center>SUCURSAL</center>
+                                        </th>
+                                        <th>
+                                            <center>VALOR TOTAL</center>
+                                        </th>
+                                        <th>
+                                            <center>FECHA REGISTRO</center>
+                                        </th>
+                                        <th>
+                                            <center>ÚLTIMA ACTUALIZACIÓN</center>
+                                        </th>
+                                        <th>
+                                            <center>ESTADO</center>
+                                        </th>
+                                        <th>
+                                            <center>CAJERO</center>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each users}}
+                                    <tr>
+                                        <td>{{PKPED_NCODIGO}}</td>
+                                        <td>
+                                            {{!-- Modal Crud Actualizar pedido--}}
+                                            <center><a><button type="button"
+                                                        class="btn btn-secondary waves-effect waves-light"
+                                                        data-toggle="modal"
+                                                        data-target="#crud_Adminpedido_actualizar_{{PKPED_NCODIGO}}"><i
+                                                            class="fas fa-edit"></i></button></a></center>
+                                            {{!-- Modal Crud Actualizar pedido--}}
+                                            <div class="modal fade" id="crud_Adminpedido_actualizar_{{PKPED_NCODIGO}}"
+                                                tabindex="-1" role="dialog"
+                                                aria-labelledby="crud_Adminpedido_actualizarTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg modal-dialog-scrollable"
+                                                    role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title"
+                                                                id="crud_Adminpedido_actualizarTitle"><i
+                                                                    class="fas fa-edit"></i> Actualizar pedido</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="/adminpedidos/{{PKPED_NCODIGO}}"
+                                                                method="POST">
+                                                                <div class="form-row">
+                                                                    
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtnumero_pedido" class="col-form-label">Numero Pedido</label>
+                                                                        <input type="text" name="numero_pedido" id="txtnumero_pedido" class="form-control"
+                                                                            data-toggle="tooltip" data-placement="bottom" value="{{PKPED_NCODIGO}}" placeholder=""
+                                                                            autocomplete="off" required readonly>
+                                                                    </div>                                                                    
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtvalor_cancelar_{{PKPED_NCODIGO}}" class="col-form-label">Valor a Cancelar</label>
+                                                                        <input type="text" name="valor_cancelar" id="txtvalor_cancelar_{{PKPED_NCODIGO}}" class="form-control"
+                                                                            data-toggle="tooltip" data-placement="bottom" value="{{PED_NVALOR_TOTAL}}" placeholder=""
+                                                                            autocomplete="off" required readonly>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <div class="input-group-prepend">
+                                                                            <label for="txttipo_pago_{{PKPED_NCODIGO}}" class="col-form-label">Tipo Pago</label>
+                                                                        </div>
+                                                                        <select class="custom-select form-control" name="tipo_pago" id="txttipo_pago_{{PKPED_NCODIGO}}" onchange="mostrarMontos('{{PKPED_NCODIGO}}');" autofocus
+                                                                        required>
+                                                                            <option value="">Elige una opción</option>
+                                                                            <option value="EFECTIVO">EFECTIVO</option>
+                                                                            <option value="TC">TC</option>
+                                                                        </select>
+                                                                    </div>  
+
+                                                                    <div id="txtmonto_recibido_div_{{PKPED_NCODIGO}}"class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6 d-none">
+                                                                        <label for="txtmonto_recibido_{{PKPED_NCODIGO}}" class="col-form-label">Monto
+                                                                            Recibido</label>
+                                                                        <input type="number" name="monto_recibido" id="txtmonto_recibido_{{PKPED_NCODIGO}}"
+                                                                            class="form-control" data-toggle="tooltip"
+                                                                            data-placement="bottom" placeholder=""
+                                                                            autocomplete="off" oninput="calcularMontoCambio('{{PKPED_NCODIGO}}');">
+                                                                    </div>
+
+                                                                    <div id="txtmonto_cambio_div_{{PKPED_NCODIGO}}" class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6 d-none">
+                                                                        <label for="txtmonto_cambio_{{PKPED_NCODIGO}}" class="col-form-label">Monto
+                                                                            Cambio</label>
+                                                                        <input type="number" name="monto_cambio" id="txtmonto_cambio_{{PKPED_NCODIGO}}"
+                                                                            class="form-control" data-toggle="tooltip"
+                                                                            data-placement="bottom" placeholder=""
+                                                                            autocomplete="off" readonly>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtestado_pedido" class="col-form-label">Estado</label>
+                                                                        <input type="text" name="estado_pedido" id="txtestado_pedido"
+                                                                            list="crud_Estado_Pedidos" class="form-control"
+                                                                            data-toggle="tooltip" data-placement="bottom" placeholder="" value="{{PED_CESTADO}}"
+                                                                            autocomplete="off" required>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <center>
+                                                                    <button type="submit" name="action"
+                                                                        class="btn btn-secondary btn-rounded waves-effect waves-light">
+                                                                        <span class="btn-label"><i
+                                                                                class="fas fa-database"></i></span>
+                                                                        Actualizar pedido
+                                                                    </button>
+                                                                </center>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{!-- Fin Modal Crud Actualizar pedido--}}
+                                        </td>
+                                        <td>{{FKUSU_NCODIGO}}</td>
+                                        <td>{{FKMES_NCODIGO}}</td>
+                                        <td>{{FKSUC_NCODIGO}}</td>
+                                        <td>{{PED_NVALOR_TOTAL}}</td>
+                                        <td>{{PED_TFECHA_REGISTRO}}</td>
+                                        <td>{{PED_TFECHA_MODIFICACION}}</td>
+                                        <td>{{PED_CESTADO}}</td>
+                                        <td>{{USU_NCODIGO_CAJERO}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        {{!-- Fin Tabla Listar pedido --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/reporting/datatable_pedido.js"></script>

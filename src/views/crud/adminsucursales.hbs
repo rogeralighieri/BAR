@@ -1,0 +1,247 @@
+<head>
+
+    <title>Administrar Sucursal</title>
+
+</head>
+
+<div class="content content-page">
+    <div class="container-fluid">
+        {{!-- Titulo pagina --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Administración de Sucursales</h4>
+                </div>
+            </div>
+        </div>
+        {{!-- Fin Titulo pagina --}}
+
+        {{!-- Formulario --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        {{> message }}
+                        <h4 class="header-title">Registrar Sucursal</h4>
+                        {{!-- Modal Crud Registrar Sucursal--}}
+                        <div class="button-list">
+                            <button type="button" class="btn btn-secondary waves-effect waves-light" data-toggle="modal"
+                                data-target="#crud_AdminSucursal_registro"><i class="fas fa-plus"></i></button>
+                            <br /><br />
+                        </div>
+
+                        <div class="modal fade" id="crud_AdminSucursal_registro" tabindex="-1" role="dialog"
+                            aria-labelledby="crud_AdminSucursal_registroTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="crud_AdminSucursal_registroTitle"><i
+                                                class="fas fa-plus"></i> Registrar Nueva Sucursal</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/adminsucursales" method="POST">
+                                            <div class="form-row">
+                                                
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6" hidden>
+                                                    <label for="txtresponsable_gestion"
+                                                        class="col-form-label">Responsable Gestión</label>
+                                                    <input type="text" name="responsable_gestion"
+                                                        id="txtresponsable_gestion" class="form-control form-control-1"
+                                                        value="{{user.PKUSU_NCODIGO}}" autocomplete="off"
+                                                        readonly>
+                                                </div>
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtnombre_sucursal" class="col-form-label">Nombre
+                                                        Sucursal</label>
+                                                    <input type="text" name="nombre_sucursal" id="txtnombre_sucursal"
+                                                        class="form-control" data-toggle="tooltip"
+                                                        data-placement="bottom" onkeyup="mayus(this);" placeholder=""
+                                                        autocomplete="off" required autofocus>
+                                                </div>
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtdireccion_sucursal" class="col-form-label">Dirección
+                                                        Sucursal</label>
+                                                    <input type="text" name="direccion_sucursal" id="txtdireccion_sucursal"
+                                                        class="form-control" data-toggle="tooltip"
+                                                        data-placement="bottom" placeholder=""
+                                                        autocomplete="off" required>
+                                                </div>
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtdetalle_sucursal" class="col-form-label">Detalle
+                                                        Sucursal</label>
+                                                    <input type="text" name="detalle_sucursal" id="txtdetalle_sucursal"
+                                                        class="form-control" data-toggle="tooltip"
+                                                        data-placement="bottom" placeholder=""
+                                                        autocomplete="off" required>
+                                                </div>
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtestado_sucursal" class="col-form-label">Estado</label>
+                                                    <input type="text" name="estado_sucursal" id="txtestado_sucursal"
+                                                        list="crud_Estado_Sucursales" class="form-control"
+                                                        data-toggle="tooltip" data-placement="bottom" placeholder=""
+                                                        autocomplete="off" required>
+                                                </div>
+                                            </div>
+                                            <center>
+                                                <button type="submit" name="action"
+                                                    class="btn btn-secondary btn-rounded waves-effect waves-light">
+                                                    <span class="btn-label"><i class="fas fa-database"></i></span>Crear
+                                                    Sucursal
+                                                </button>
+                                            </center>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{!-- Fin Modal Crud Registrar Sucursal--}}
+
+                        {{!-- Tabla Listar Sucursales --}}
+                        <div class="table-responsive">
+                            <table id="Reporte_Admin_Sucursal" class="table table-striped dt-responsive nowrap"
+                                style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <center>ID</center>
+                                        </th>
+                                        <th>
+                                            <center>EDITAR</center>
+                                        </th>
+                                        <th>
+                                            <center>NOMBRE SUCURSAL</center>
+                                        </th>
+                                        <th>
+                                            <center>DIRECCIÓN SUCURSAL</center>
+                                        </th>
+                                        <th>
+                                            <center>DETALLE SUCURSAL</center>
+                                        </th>
+                                        <th>
+                                            <center>FECHA REGISTRO</center>
+                                        </th>
+                                        <th>
+                                            <center>ÚLTIMA ACTUALIZACIÓN</center>
+                                        </th>
+                                        <th>
+                                            <center>ESTADO SUCURSAL</center>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each users}}
+                                    <tr>
+                                        <td>{{PKSUC_NCODIGO}}</td>
+                                        <td>
+                                            {{!-- Modal Crud Actualizar Sucuarsal--}}
+                                            <center><a><button type="button"
+                                                        class="btn btn-secondary waves-effect waves-light"
+                                                        data-toggle="modal"
+                                                        data-target="#crud_AdminSucursal_actualizar_{{PKSUC_NCODIGO}}"><i
+                                                            class="fas fa-edit"></i></button></a></center>
+                                            {{!-- Modal Crud Actualizar Sucuarsal--}}
+                                            <div class="modal fade" id="crud_AdminSucursal_actualizar_{{PKSUC_NCODIGO}}"
+                                                tabindex="-1" role="dialog"
+                                                aria-labelledby="crud_AdminSucursal_actualizarTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg modal-dialog-scrollable"
+                                                    role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title"
+                                                                id="crud_AdminSucursal_actualizarTitle"><i
+                                                                    class="fas fa-edit"></i> Actualizar Sucursal</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="/adminsucursales/{{PKSUC_NCODIGO}}"
+                                                                method="POST">
+                                                                <div class="form-row">
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtnombre_sucursal" class="col-form-label">Nombre
+                                                                            Sucursal</label>
+                                                                        <input type="text" name="nombre_sucursal" id="txtnombre_sucursal"
+                                                                            class="form-control" data-toggle="tooltip"
+                                                                            data-placement="bottom" onkeyup="mayus(this);" placeholder="" value="{{SUC_CNOMBRE}}"
+                                                                            autocomplete="off" required autofocus>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtdireccion_sucursal" class="col-form-label">Dirección
+                                                                            Sucursal</label>
+                                                                        <input type="text" name="direccion_sucursal" id="txtdireccion_sucursal"
+                                                                            class="form-control" data-toggle="tooltip"
+                                                                            data-placement="bottom" placeholder="" value="{{SUC_CDIRECCION}}"
+                                                                            autocomplete="off" required>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtdetalle_sucursal" class="col-form-label">Detalle
+                                                                            Sucursal</label>
+                                                                        <input type="text" name="detalle_sucursal" id="txtdetalle_sucursal"
+                                                                            class="form-control" data-toggle="tooltip"
+                                                                            data-placement="bottom" placeholder="" value="{{SUC_CDETALLE_CONTACTO}}"
+                                                                            autocomplete="off" required>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtestado_sucursal" class="col-form-label">Estado</label>
+                                                                        <input type="text" name="estado_sucursal" id="txtestado_sucursal"
+                                                                            list="crud_Estado_Sucursales" class="form-control"
+                                                                            data-toggle="tooltip" data-placement="bottom" placeholder="" value="{{SUC_CESTADO}}"
+                                                                            autocomplete="off" required>
+                                                                    </div>
+                                                                </div>
+                                                                <center>
+                                                                    <button type="submit" name="action"
+                                                                        class="btn btn-secondary btn-rounded waves-effect waves-light">
+                                                                        <span class="btn-label"><i
+                                                                                class="fas fa-database"></i></span>
+                                                                        Actualizar Sucursal
+                                                                    </button>
+                                                                </center>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{!-- Fin Modal Crud Actualizar Sucursal--}}
+                                        </td>
+                                        <td>{{SUC_CNOMBRE}}</td>
+                                        <td>{{SUC_CDIRECCION}}</td>
+                                        <td>{{SUC_CDETALLE_CONTACTO}}</td>
+                                        <td>{{SUC_TFECHA_REGISTRO}}</td>
+                                        <td>{{SUC_TFECHA_MODIFICACION}}</td>
+                                        <td>{{SUC_CESTADO}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        {{!-- Fin Tabla Listar Sucursal --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/reporting/datatable_sucursal.js"></script>

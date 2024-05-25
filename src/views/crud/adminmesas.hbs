@@ -1,0 +1,269 @@
+<head>
+
+    <title>Administrar Mesas</title>
+
+</head>
+
+<div class="content content-page">
+    <div class="container-fluid">
+        {{!-- Titulo pagina --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Administración de Mesas</h4>
+                </div>
+            </div>
+        </div>
+        {{!-- Fin Titulo pagina --}}
+
+        {{!-- Formulario --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        {{> message }}
+                        <h4 class="header-title">Registrar Mesa</h4>
+                        {{!-- Modal Crud Registrar Mesa--}}
+                        <div class="button-list">
+                            <button type="button" class="btn btn-secondary waves-effect waves-light" data-toggle="modal"
+                                data-target="#crud_AdminMesa_registro"><i class="fas fa-plus"></i></button>
+                            <br /><br />
+                        </div>
+
+                        <div class="modal fade" id="crud_AdminMesa_registro" tabindex="-1" role="dialog"
+                            aria-labelledby="crud_AdminMesa_registroTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="crud_AdminMesa_registroTitle"><i
+                                                class="fas fa-plus"></i> Registrar Nuevo Mesa</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/adminmesas" method="POST">
+                                            <div class="form-row">
+                                                
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6" hidden>
+                                                    <label for="txtresponsable_gestion"
+                                                        class="col-form-label">Responsable Gestión</label>
+                                                    <input type="text" name="responsable_gestion"
+                                                        id="txtresponsable_gestion" class="form-control form-control-1"
+                                                        value="{{user.PKUSU_NCODIGO}}" autocomplete="off"
+                                                        readonly>
+                                                </div>
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtsucursales_disponibles" class="col-form-label">Sucursal</label>
+                                                    <select class="custom-select form-control" name="sucursal_disponibles" id="txtsucursales_disponibles" autofocus
+                                                    required>
+                                                        <option value="">Elige una opción</option>
+                                                    </select>
+                                                </div> 
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtreferencia_mesa" class="col-form-label">Hubicación
+                                                        </label>
+                                                    <input type="text" name="referencia_mesa" id="txtreferencia_mesa"
+                                                        class="form-control" data-toggle="tooltip"
+                                                        data-placement="bottom" placeholder=""
+                                                        autocomplete="off" required>
+                                                </div>
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtcantidad_sillas_mesa" class="col-form-label">Cantidad Sillas
+                                                        </label>
+                                                    <input type="number" name="cantidad_sillas_mesa" id="txtcantidad_sillas_mesa"
+                                                        class="form-control" data-toggle="tooltip"
+                                                        data-placement="bottom" placeholder=""
+                                                        autocomplete="off" required>
+                                                </div>
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtdetalle_mesa" class="col-form-label">Detalle Mesa
+                                                    </label>
+                                                    <input type="text" name="detalle_mesa" id="txtdetalle_mesa"
+                                                        class="form-control" data-toggle="tooltip"
+                                                        data-placement="bottom" placeholder=""
+                                                        autocomplete="off" required>
+                                                </div>
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtestado_mesa" class="col-form-label">Estado</label>
+                                                    <input type="text" name="estado_mesa" id="txtestado_mesa"
+                                                        list="crud_Estado_Mesas" class="form-control"
+                                                        data-toggle="tooltip" data-placement="bottom" value="Disponible" placeholder=""
+                                                        autocomplete="off" required readonly>
+                                                </div>
+                                            </div>
+                                            <center>
+                                                <button type="submit" name="action"
+                                                    class="btn btn-secondary btn-rounded waves-effect waves-light">
+                                                    <span class="btn-label"><i class="fas fa-database"></i></span>Crear
+                                                    mesa
+                                                </button>
+                                            </center>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{!-- Fin Modal Crud Registrar mesa--}}
+
+                        {{!-- Tabla Listar mesas --}}
+                        <div class="table-responsive">
+                            <table id="Reporte_Admin_Mesa" class="table table-striped dt-responsive nowrap"
+                                style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <center>ID</center>
+                                        </th>
+                                        <th>
+                                            <center>EDITAR</center>
+                                        </th>
+                                        <th>
+                                            <center>SUCURSAL</center>
+                                        </th>
+                                        <th>
+                                            <center>HUBICACIÓN</center>
+                                        </th>
+                                        <th>
+                                            <center>CANTIDAD SILLAS</center>
+                                        </th>
+                                        <th>
+                                            <center>DETALLE</center>
+                                        </th>
+                                        <th>
+                                            <center>FECHA REGISTRO</center>
+                                        </th>
+                                        <th>
+                                            <center>ÚLTIMA ACTUALIZACIÓN</center>
+                                        </th>
+                                        <th>
+                                            <center>ESTADO MESA</center>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each users}}
+                                    <tr>
+                                        <td>{{PKMES_NCODIGO}}</td>
+                                        <td>
+                                            {{!-- Modal Crud Actualizar mesa--}}
+                                            <center><a><button type="button"
+                                                        class="btn btn-secondary waves-effect waves-light"
+                                                        data-toggle="modal"
+                                                        data-target="#crud_Adminmesa_actualizar_{{PKMES_NCODIGO}}"><i
+                                                            class="fas fa-edit"></i></button></a></center>
+                                            {{!-- Modal Crud Actualizar mesa--}}
+                                            <div class="modal fade" id="crud_Adminmesa_actualizar_{{PKMES_NCODIGO}}"
+                                                tabindex="-1" role="dialog"
+                                                aria-labelledby="crud_Adminmesa_actualizarTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg modal-dialog-scrollable"
+                                                    role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title"
+                                                                id="crud_Adminmesa_actualizarTitle"><i
+                                                                    class="fas fa-edit"></i> Actualizar mesa</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="/adminmesas/{{PKMES_NCODIGO}}"
+                                                                method="POST">
+                                                                <div class="form-row">
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtsucursal_disponibles" class="col-form-label">Sucursal
+                                                                            </label>
+                                                                        <input type="text" name="sucursal_disponibles" id="txtsucursal_disponibles"
+                                                                            class="form-control" data-toggle="tooltip"
+                                                                            data-placement="bottom" placeholder="" value="{{FKSUC_NCODIGO}}"
+                                                                            autocomplete="off" readonly>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtreferencia_mesa" class="col-form-label">Hubicación
+                                                                            </label>
+                                                                        <input type="text" name="referencia_mesa" id="txtreferencia_mesa"
+                                                                            class="form-control" data-toggle="tooltip"
+                                                                            data-placement="bottom" placeholder="" value="{{MES_CREFERENCIA}}"
+                                                                            autocomplete="off" required autofocus>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtcantidad_sillas_mesa" class="col-form-label">Cantidad Sillas
+                                                                            </label>
+                                                                        <input type="number" name="cantidad_sillas_mesa" id="txtcantidad_sillas_mesa"
+                                                                            class="form-control" data-toggle="tooltip"
+                                                                            data-placement="bottom" placeholder="" value="{{MES_NCANTIDAD_SILLAS}}"
+                                                                            autocomplete="off" required>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtdetalle_mesa" class="col-form-label">Detalle Mesa
+                                                                        </label>
+                                                                        <input type="text" name="detalle_mesa" id="txtdetalle_mesa"
+                                                                            class="form-control" data-toggle="tooltip"
+                                                                            data-placement="bottom" placeholder="" value="{{MES_CDETALLE}}"
+                                                                            autocomplete="off" required>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtestado_mesa" class="col-form-label">Estado</label>
+                                                                        <input type="text" name="estado_mesa" id="txtestado_mesa"
+                                                                            list="crud_Estado_Mesas" class="form-control"
+                                                                            data-toggle="tooltip" data-placement="bottom" placeholder="" value="{{MES_CESTADO}}"
+                                                                            autocomplete="off" required>
+                                                                    </div>
+                                                                </div>
+                                                                <center>
+                                                                    <button type="submit" name="action"
+                                                                        class="btn btn-secondary btn-rounded waves-effect waves-light">
+                                                                        <span class="btn-label"><i
+                                                                                class="fas fa-database"></i></span>
+                                                                        Actualizar mesa
+                                                                    </button>
+                                                                </center>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{!-- Fin Modal Crud Actualizar mesa--}}
+                                        </td>
+                                        <td>{{FKSUC_NCODIGO}}</td>
+                                        <td>{{MES_CREFERENCIA}}</td>
+                                        <td>{{MES_NCANTIDAD_SILLAS}}</td>
+                                        <td>{{MES_CDETALLE}}</td>
+                                        <td>{{MES_TFECHA_REGISTRO}}</td>
+                                        <td>{{MES_TFECHA_MODIFICACION}}</td>
+                                        <td>{{MES_CESTADO}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        {{!-- Fin Tabla Listar mesa --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/reporting/datatable_mesa.js"></script>
+<script src="js/reporting/sucursales_disponibles.js"></script>

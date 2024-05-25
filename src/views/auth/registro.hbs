@@ -1,0 +1,105 @@
+<head>
+
+  <title>Registro</title>
+
+</head>
+
+<body class="authentication-bg authentication-bg-pattern">
+  <div class="container px-4 py-5 mx-auto">
+    <div class="card card0">
+      <div class="d-flex flex-lg-row flex-column-reverse">
+
+        <div class="card card1">          
+          <div class="row justify-content-center my-auto px-4">
+            <div class="col-md-12 col-10">
+
+              {{> message }} 
+
+              <div class="text-center w-75 m-auto">
+                <center><img height="180" src="img/logo/logo.png" alt="Responsive image" /></center>
+              </div>
+
+              <h6 class="msg-info">Por favor, registre su cuenta</h6>
+
+              <form action="/Registro" method="POST">
+                <div class="form-row">
+                  <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <label class="form-control-label text-muted" for="txtdocumento_usuario">Documento</label>
+                    <input type="text" name="documento" id="txtdocumento_usuario" class="form-control"
+                      data-toggle="tooltip" data-placement="bottom" placeholder="" onkeyup="mayus(this);" autocomplete="off" required>
+                  </div>
+
+                  <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <label class="form-control-label text-muted" for="txtnombres_apellidos_usuario">Nombres y Apellidos</label>
+                    <input type="text" name="fullname" id="txtnombres_apellidos_usuario" class="form-control"
+                      data-toggle="tooltip" data-placement="bottom" placeholder="" onkeyup="mayus(this);" autocomplete="off" required>
+                  </div>
+
+                  <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <label class="form-control-label text-muted" for="txtusuario_red">Usuario</label>
+                    <input type="text" name="username" id="txtusuario_red" class="form-control" data-toggle="tooltip"
+                      data-placement="bottom" placeholder="" onkeyup="mayus(this);"
+                      autocomplete="off" required>
+                  </div>
+
+                  <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <label class="form-control-label text-muted" for="txtrol_usuario">Rol</label>
+                    <input type="text" name="rol" id="txtrol_usuario" list="crud_rol_internos" class="form-control"
+                      data-toggle="tooltip" data-placement="bottom" placeholder=""
+                      autocomplete="off" required>
+                  </div>
+
+                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <label class="form-control-label text-muted" for="txtpassword_usuario">Constraseña</label>
+                    <input type="password" name="password" id="txtpassword_usuario" class="form-control"
+                      data-toggle="tooltip" data-placement="bottom" placeholder="" autocomplete="off" required>
+                  </div>
+
+                  <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <label class="form-control-label text-muted" for="txtcargo">Cargo</label>
+                    <input type="text" name="cargo" id="txtcargo" list="crud_rol_internos" class="form-control"
+                      data-toggle="tooltip" data-placement="bottom" placeholder=""
+                      autocomplete="off" required>
+                  </div>
+
+                  <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <label class="form-control-label text-muted" for="txtresponsalbe_gestion">Nombres y Apellidos</label>
+                    <input type="text" name="responsalbe_gestion" id="txtresponsalbe_gestion" class="form-control"
+                      data-toggle="tooltip" data-placement="bottom" placeholder="" onkeyup="mayus(this);" autocomplete="off" required>
+                  </div>
+                </div>
+
+                <div class="row justify-content-center px-3">
+                  <button type="submit" class="btn-block btn-color">Registrar</button>
+                </div>
+
+                <div class="login_btn_wrapper">
+                </div>              
+
+                <div class="row mt-3">
+                  <div class="col-12 text-center">
+                    <p class="text-muted">Ya tienes una cuenta? <a href="/Login" class="text-muted ml-1"><b
+                          class="font-weight-semibold">Ingresar</b></a></p>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card2">
+          <div class="my-auto mx-md-5 px-md-5 right">
+            <h3 class="text-white">Somos más que una academia</h3>
+            <small class="text-white">
+              Bienvenidos a AprendeYa, la plataforma líder en educación en línea. Nuestro objetivo es brindar acceso a
+              la educación de calidad a cualquier persona en cualquier lugar del mundo. Ofrecemos una amplia variedad de
+              cursos en línea impartidos por expertos en la materia para ayudarte a alcanzar tus objetivos educativos y
+              profesionales.
+            </small>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div> 
+</body>

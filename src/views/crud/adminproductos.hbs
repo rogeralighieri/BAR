@@ -1,0 +1,247 @@
+<head>
+
+    <title>Administrar Productos</title>
+
+</head>
+
+<div class="content content-page">
+    <div class="container-fluid">
+        {{!-- Titulo pagina --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Administración de Productos</h4>
+                </div>
+            </div>
+        </div>
+        {{!-- Fin Titulo pagina --}}
+
+        {{!-- Formulario --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        {{> message }}
+                        <h4 class="header-title">Registrar Producto</h4>
+                        {{!-- Modal Crud Registrar Producto--}}
+                        <div class="button-list">
+                            <button type="button" class="btn btn-secondary waves-effect waves-light" data-toggle="modal"
+                                data-target="#crud_AdminProducto_registro"><i class="fas fa-plus"></i></button>
+                            <br /><br />
+                        </div>
+
+                        <div class="modal fade" id="crud_AdminProducto_registro" tabindex="-1" role="dialog"
+                            aria-labelledby="crud_AdminProducto_registroTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="crud_AdminProducto_registroTitle"><i
+                                                class="fas fa-plus"></i> Registrar Nuevo Producto</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/adminproductos" method="POST">
+                                            <div class="form-row">
+                                                
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6" hidden>
+                                                    <label for="txtresponsable_gestion"
+                                                        class="col-form-label">Responsable Gestión</label>
+                                                    <input type="text" name="responsable_gestion"
+                                                        id="txtresponsable_gestion" class="form-control form-control-1"
+                                                        value="{{user.PKUSU_NCODIGO}}" autocomplete="off"
+                                                        readonly>
+                                                </div>
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtnombre_producto" class="col-form-label">Nombre
+                                                        Producto</label>
+                                                    <input type="text" name="nombre_producto" id="txtnombre_producto"
+                                                        class="form-control" data-toggle="tooltip"
+                                                        data-placement="bottom" placeholder=""
+                                                        autocomplete="off" required autofocus>
+                                                </div>
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtcantidad_producto" class="col-form-label">Cantidad
+                                                        </label>
+                                                    <input type="number" name="cantidad_producto" id="txtcantidad_producto"
+                                                        class="form-control" data-toggle="tooltip"
+                                                        data-placement="bottom" placeholder=""
+                                                        autocomplete="off" required>
+                                                </div>
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtprecio_unitario" class="col-form-label">Precio
+                                                        Unitario</label>
+                                                    <input type="number" name="precio_unitario" id="txtprecio_unitario"
+                                                        class="form-control" data-toggle="tooltip"
+                                                        data-placement="bottom" placeholder=""
+                                                        autocomplete="off" required>
+                                                </div>
+
+                                                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="txtestado_producto" class="col-form-label">Estado</label>
+                                                    <input type="text" name="estado_producto" id="txtestado_producto"
+                                                        list="crud_Estado_Productos" class="form-control"
+                                                        data-toggle="tooltip" data-placement="bottom" value="Activo" placeholder=""
+                                                        autocomplete="off" required readonly>
+                                                </div>
+                                            </div>
+                                            <center>
+                                                <button type="submit" name="action"
+                                                    class="btn btn-secondary btn-rounded waves-effect waves-light">
+                                                    <span class="btn-label"><i class="fas fa-database"></i></span>Crear
+                                                    Producto
+                                                </button>
+                                            </center>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{!-- Fin Modal Crud Registrar Producto--}}
+
+                        {{!-- Tabla Listar Productos --}}
+                        <div class="table-responsive">
+                            <table id="Reporte_Admin_Producto" class="table table-striped dt-responsive nowrap"
+                                style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <center>ID</center>
+                                        </th>
+                                        <th>
+                                            <center>EDITAR</center>
+                                        </th>
+                                        <th>
+                                            <center>NOMBRE PRODUCTO</center>
+                                        </th>
+                                        <th>
+                                            <center>CANTIDAD DISPONIBLE</center>
+                                        </th>
+                                        <th>
+                                            <center>VALOR UNITARIO</center>
+                                        </th>
+                                        <th>
+                                            <center>FECHA REGISTRO</center>
+                                        </th>
+                                        <th>
+                                            <center>ÚLTIMA ACTUALIZACIÓN</center>
+                                        </th>
+                                        <th>
+                                            <center>ESTADO PRODUCTO</center>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each users}}
+                                    <tr>
+                                        <td>{{PKPRO_NCODIGO}}</td>
+                                        <td>
+                                            {{!-- Modal Crud Actualizar Producto--}}
+                                            <center><a><button type="button"
+                                                        class="btn btn-secondary waves-effect waves-light"
+                                                        data-toggle="modal"
+                                                        data-target="#crud_AdminProducto_actualizar_{{PKPRO_NCODIGO}}"><i
+                                                            class="fas fa-edit"></i></button></a></center>
+                                            {{!-- Modal Crud Actualizar Producto--}}
+                                            <div class="modal fade" id="crud_AdminProducto_actualizar_{{PKPRO_NCODIGO}}"
+                                                tabindex="-1" role="dialog"
+                                                aria-labelledby="crud_AdminProducto_actualizarTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg modal-dialog-scrollable"
+                                                    role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title"
+                                                                id="crud_AdminProducto_actualizarTitle"><i
+                                                                    class="fas fa-edit"></i> Actualizar Producto</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="/adminproductos/{{PKPRO_NCODIGO}}"
+                                                                method="POST">
+                                                                <div class="form-row">
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtnombre_producto" class="col-form-label">Nombre
+                                                                            Producto</label>
+                                                                        <input type="text" name="nombre_producto" id="txtnombre_producto"
+                                                                            class="form-control" data-toggle="tooltip"
+                                                                            data-placement="bottom" placeholder=""value="{{PRO_CNOMBRE}}"
+                                                                            autocomplete="off" required autofocus>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtcantidad_producto" class="col-form-label">Cantidad
+                                                                            </label>
+                                                                        <input type="number" name="cantidad_producto" id="txtcantidad_producto"
+                                                                            class="form-control" data-toggle="tooltip"
+                                                                            data-placement="bottom" placeholder="" value="{{PRO_NCANTIDAD_DISPONIBLE}}"
+                                                                            autocomplete="off" required>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtprecio_unitario" class="col-form-label">Precio
+                                                                            Unitario</label>
+                                                                        <input type="number" name="precio_unitario" id="txtprecio_unitario"
+                                                                            class="form-control" data-toggle="tooltip"
+                                                                            data-placement="bottom" placeholder="" value="{{PRO_NPRECIO_UNITARIO}}"
+                                                                            autocomplete="off" required>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                        <label for="txtestado_producto" class="col-form-label">Estado</label>
+                                                                        <input type="text" name="estado_producto" id="txtestado_producto"
+                                                                            list="crud_Estado_Productos" class="form-control"
+                                                                            data-toggle="tooltip" data-placement="bottom" placeholder="" value="{{PRO_CESTADO}}"
+                                                                            autocomplete="off" required readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <center>
+                                                                    <button type="submit" name="action"
+                                                                        class="btn btn-secondary btn-rounded waves-effect waves-light">
+                                                                        <span class="btn-label"><i
+                                                                                class="fas fa-database"></i></span>
+                                                                        Actualizar Producto
+                                                                    </button>
+                                                                </center>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{!-- Fin Modal Crud Actualizar Producto--}}
+                                        </td>
+                                        <td>{{PRO_CNOMBRE}}</td>
+                                        <td>{{PRO_NCANTIDAD_DISPONIBLE}}</td>
+                                        <td>{{PRO_NPRECIO_UNITARIO}}</td>
+                                        <td>{{PRO_TFECHA_REGISTRO}}</td>
+                                        <td>{{PRO_TFECHA_MODIFICACION}}</td>
+                                        <td>{{PRO_CESTADO}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        {{!-- Fin Tabla Listar Producto --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/reporting/datatable_producto.js"></script>

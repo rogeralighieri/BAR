@@ -1,0 +1,72 @@
+<head>
+
+    <title>Lista de Productos</title>
+
+</head>
+
+<body class="authentication-bg authentication-bg-pattern">
+
+    <div class="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
+    <ul class="list-unstyled topnav-menu float-right mb-0">
+        <li class="dropdown notification-list">
+            <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button"
+            aria-haspopup="false" aria-expanded="false">
+            <i class="fe-user"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+            <a href="/login" class="dropdown-item notify-item">
+                <i class="fe-user"></i>
+                <span>Login</span>
+            </a>
+            </div>
+        </li>
+    </ul>
+    </div>
+
+    <div class="account-pages mt-5 mb-5">
+        <div class="container">      
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-12 col-xl-8">
+                    <div class="card">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    
+                                    {{!-- Tabla Listar Productos --}}
+                                    <div class="table-responsive">
+                                        <table id="Reporte_Admin_Producto" class="table table-striped dt-responsive nowrap"
+                                            style="width:100%">
+                                            <thead>
+                                                <tr>                                                                              
+                                                    <th>
+                                                        <center>NOMBRE PRODUCTO</center>
+                                                    </th>
+                                                    <th>
+                                                        <center>VALOR UNITARIO</center>
+                                                    </th>                                        
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{#each users}}
+                                                <tr>
+                                                    <td>{{PRO_CNOMBRE}}</td>
+                                                    <td>{{PRO_NPRECIO_UNITARIO}}</td>
+                                                </tr>
+                                                {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {{!-- Fin Tabla Listar Producto --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="js/reporting/listaproductos.js"></script>
