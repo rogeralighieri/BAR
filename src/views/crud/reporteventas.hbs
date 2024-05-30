@@ -1,0 +1,97 @@
+<head>
+
+    <title>Reporte de Ventas</title>
+
+</head>
+
+<div class="content content-page">
+    <div class="container-fluid">
+        {{!-- Titulo pagina --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Reporte de Ventas</h4>
+                </div>
+            </div>
+        </div>
+        {{!-- Fin Titulo pagina --}}
+
+        {{!-- Formulario --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        {{> message }}
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <label for="txtfecha_hora_ingreso" class="col-form-label">Fecha Inicio</label>
+                                    <input type="text" id="txtfecha_inicio_reporting" name="fechaInicioFRN" class="form-control date"
+                                        data-toggle="tooltip" data-placement="bottom" placeholder="" autocomplete="off">
+                                </div>
+                                <div class="form-group col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <label for="txtfecha_hora_registro" class="col-form-label">Fecha Fin</label>
+                                    <div class="input-group">
+                                        <input type="text" id="txtfecha_fin_reporting" name="fechaFinFRN" class="form-control date"
+                                            data-toggle="tooltip" data-placement="bottom" placeholder="" autocomplete="off">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="filtroFecha"><i class="fas fa-filter"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        {{!-- Tabla Listar pedidos --}}
+                        <div class="table-responsive">
+                            <table id="Reporte_Venta" class="table table-striped dt-responsive nowrap"
+                                style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th><center>ID PEDIDO</center></th>
+                                        <th><center>ID USUARIO</center></th>
+                                        <th><center>USUARIO RED</center></th>
+                                        <th><center>NOMBRE USUARIO</center></th>
+                                        <th><center>ROL USUARIO</center></th>
+                                        <th><center>ID MESA</center></th>
+                                        <th><center>REFERENCIA MESA</center></th>
+                                        <th><center>DETALLE MESA</center></th>
+                                        <th><center>ID SUCURSAL</center></th>
+                                        <th><center>NOMBRE SUCURSAL</center></th>
+                                        <th><center>DIRECCION SUCURSAL</center></th>
+                                        <th><center>VALOR PEDIDO</center></th>
+                                        <th><center>FECHA PEDIDO</center></th>
+                                        <th><center>ESTADO PEDIDO</center></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each users}}
+                                    <tr>  
+                                        <td>{{PKPED_NCODIGO}}</td>
+                                        <td>{{FKUSU_NCODIGO}}</td>
+                                        <td>{{USU_CUSUARIO}}</td>
+                                        <td>{{USU_CNOMBRE_USUARIO}}</td>
+                                        <td>{{USU_CROL}}</td>
+                                        <td>{{FKMES_NCODIGO}}</td>
+                                        <td>{{MES_CREFERENCIA}}</td>
+                                        <td>{{MES_CDETALLE}}</td>
+                                        <td>{{FKSUC_NCODIGO}}</td>
+                                        <td>{{SUC_CNOMBRE}}</td>
+                                        <td>{{SUC_CDIRECCION}}</td>
+                                        <td>{{PED_NVALOR_TOTAL}}</td>
+                                        <td>{{PED_TFECHA_REGISTRO}}</td>
+                                        <td>{{PED_CESTADO}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        {{!-- Fin Tabla Listar pedido --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/reporting/datatable_venta.js"></script>

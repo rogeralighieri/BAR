@@ -270,4 +270,99 @@ router.post('/adminpedidos/:id', isLoggedIn, async (req, res) => {
     }
 });
 
+// ---------------------------------
+
+// Funcion Fecha Actual
+function GetFechaActual() {
+    Mes = new Date().getMonth() + 1;
+    if (Mes >= 1 && Mes < 10) {
+        Mes = "0" + Mes.toString();
+    }
+    Dia = new Date().getDate();
+    if (Dia >= 1 && Dia < 10) {
+        Dia = "0" + Dia.toString();
+    }
+    var FechaActual = new Date().getFullYear() + "-" + Mes + "-" + Dia;
+    return FechaActual;
+}
+
+/* Reporte Ventas */
+router.get('/reporteventas', isLoggedIn, async (req, res) => {
+    try {
+        if (req.user.USU_CROL == "Administrador" || req.user.USU_CROL == "Supervisor") {
+            const sql =  
+                `SELECT 
+                    pe.PKPED_NCODIGO AS PKPED_NCODIGO,
+                    pe.FKUSU_NCODIGO AS FKUSU_NCODIGO,
+                    us.USU_CUSUARIO AS USU_CUSUARIO,
+                    us.USU_CNOMBRE_USUARIO AS USU_CNOMBRE_USUARIO,
+                    us.USU_CROL AS USU_CROL,
+                    pe.FKMES_NCODIGO AS FKMES_NCODIGO,
+                    me.MES_CREFERENCIA AS MES_CREFERENCIA,
+                    me.MES_CDETALLE AS MES_CDETALLE,
+                    pe.FKSUC_NCODIGO AS FKSUC_NCODIGO,
+                    su.SUC_CNOMBRE AS SUC_CNOMBRE,
+                    su.SUC_CDIRECCION AS SUC_CDIRECCION,
+                    pe.PED_NVALOR_TOTAL AS PED_NVALOR_TOTAL,
+                    pe.PED_TFECHA_REGISTRO AS PED_TFECHA_REGISTRO,
+                    pe.PED_CESTADO AS PED_CESTADO    
+                FROM 
+                    tbl_pedido pe
+                JOIN
+                    tbl_rusuarios us ON pe.FKUSU_NCODIGO = us.PKUSU_NCODIGO
+                JOIN
+                    tbl_mesa me ON pe.FKMES_NCODIGO = me.PKMES_NCODIGO
+                JOIN
+                    tbl_sucursal su ON pe.FKSUC_NCODIGO = su.PKSUC_NCODIGO`;                
+            const users = await pool.query(sql);
+            res.render('crud/reporteventas', { users });
+        } else {
+            res.redirect('/redirect');
+        }
+    } catch (error) {
+        res.render('401');
+    }
+});
+
+router.post('/reporteventas', isLoggedIn, async (req, res) => {
+    try {
+        if (req.user.USU_CROL == "Administrador" || req.user.USU_CROL == "Supervisor") {
+            const fechaInicial = req.body.fechaInicial.split('/').join('-');
+            const fechaFinal = req.body.fechaFinal.split('/').join('-');
+            const select =  
+                `SELECT 
+                    pe.PKPED_NCODIGO AS PKPED_NCODIGO,
+                    pe.FKUSU_NCODIGO AS FKUSU_NCODIGO,
+                    us.USU_CUSUARIO AS USU_CUSUARIO,
+                    us.USU_CNOMBRE_USUARIO AS USU_CNOMBRE_USUARIO,
+                    us.USU_CROL AS USU_CROL,
+                    pe.FKMES_NCODIGO AS FKMES_NCODIGO,
+                    me.MES_CREFERENCIA AS MES_CREFERENCIA,
+                    me.MES_CDETALLE AS MES_CDETALLE,
+                    pe.FKSUC_NCODIGO AS FKSUC_NCODIGO,
+                    su.SUC_CNOMBRE AS SUC_CNOMBRE,
+                    su.SUC_CDIRECCION AS SUC_CDIRECCION,
+                    pe.PED_NVALOR_TOTAL AS PED_NVALOR_TOTAL,
+                    pe.PED_TFECHA_REGISTRO AS PED_TFECHA_REGISTRO,
+                    pe.PED_CESTADO AS PED_CESTADO    
+                FROM 
+                    tbl_pedido pe
+                JOIN
+                    tbl_rusuarios us ON pe.FKUSU_NCODIGO = us.PKUSU_NCODIGO
+                JOIN
+                    tbl_mesa me ON pe.FKMES_NCODIGO = me.PKMES_NCODIGO
+                JOIN
+                    tbl_sucursal su ON pe.FKSUC_NCODIGO = su.PKSUC_NCODIGO`;  
+            const limit = " WHERE PED_TFECHA_REGISTRO BETWEEN '" + fechaInicial + " 00:00:00'" + " AND '" + fechaFinal + " 23:59:59'" + "ORDER BY PKPED_NCODIGO DESC LIMIT 3000" + ";";
+            const sql = select + limit;
+            const consulta = await pool.query(sql);
+            res.json(consulta);
+        } else {
+            res.redirect('/redirect');
+        }
+    } catch (error) {
+        res.render('401');
+    }
+});
+
 module.exports = router;
